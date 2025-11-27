@@ -1,3 +1,9 @@
+/* Script tema Dark Love
+   - corações caindo até ~50vh
+   - quando total alcançado, formam um coração final (pontos)
+   - modal pausa corações
+*/
+
 document.addEventListener("DOMContentLoaded", () => {
   const music = document.getElementById("music");
   const modal = document.getElementById("modal");
@@ -5,13 +11,17 @@ document.addEventListener("DOMContentLoaded", () => {
   const cardBox = document.getElementById("cardBox");
   const closeCard = document.getElementById("closeCard");
   const heartsContainer = document.getElementById("hearts-container");
-  const bigHeart = document.getElementById("big-heart");
 
-  // inicial
+  // configs
+  let fallCount = 0;
+  const totalFalls = 22; // quantos corações precisam cair para formar o coração final
+  const fallIntervalMs = 420;
+
+  // init modal hidden
   modal.classList.add("hidden");
   modal.setAttribute("aria-hidden", "true");
 
-  // evitar autoplay bloqueado: tocar na 1ª interação do usuário
+  // start music at first click (evita bloqueio do navegador)
   let started = false;
   document.addEventListener("click", () => {
     if (!started) {
@@ -20,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }, { once: true });
 
-  // abrir modal com texto da carta
+  // abrir modal
   function open(btn) {
     const text = btn.getAttribute("data-text") || "";
     cardText.innerText = text;
@@ -28,136 +38,151 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.add("modal-open");
     modal.classList.remove("hidden");
     modal.setAttribute("aria-hidden", "false");
+    setTimeout(() => cardBox.classList.add("show"), 30);
 
-    // anima
-    setTimeout(() => {
-      cardBox.classList.add("show");
-      cardBox.setAttribute("aria-hidden", "false");
-    }, 30);
-
-    // opcional: quando modal abre, diminuímos volume suave
-    try {
-      music.volume = 0.18;
-    } catch (e) {}
+    // abaixa música suavemente
+    try { music.volume = 0.18; } catch(e) {}
   }
 
-  // fechar
+  // fechar modal
   function close() {
     cardBox.classList.remove("show");
     document.body.classList.remove("modal-open");
-
-    // volta volume
-    try { music.volume = 0.35; } catch (e) {}
-
+    try { music.volume = 0.35; } catch(e) {}
     setTimeout(() => {
       modal.classList.add("hidden");
       modal.setAttribute("aria-hidden", "true");
-    }, 260);
+    }, 270);
 
-    // se o big-heart estava ativo, remover e reiniciar contagem para novo ciclo
-    if (bigHeart.classList.contains("active")) {
-      bigHeart.classList.remove("active");
-      // reiniciar contadores:
+    // reinicia contagem caso já tenha mostrado o coração final
+    if (fallCount >= totalFalls) {
       fallCount = 0;
+      removeFinalHeart();
+      // allow new final after small delay
+      setTimeout(() => { fallCount = 0; }, 400);
     }
   }
 
-  // eventos dos botões
+  // events
   document.getElementById("btn1").addEventListener("click", (e) => open(e.currentTarget));
   document.getElementById("btn2").addEventListener("click", (e) => open(e.currentTarget));
   document.getElementById("btn3").addEventListener("click", (e) => open(e.currentTarget));
   closeCard.addEventListener("click", close);
+  modal.addEventListener("click", (e) => { if (e.target === modal) close(); });
 
-  modal.addEventListener("click", (e) => {
-    if (e.target === modal) close();
-  });
-
-  // -----------------------
-  // CORAÇÕES CAINDO (principal)
-  // -----------------------
-  let fallCount = 0;
-  const totalFalls = 20; // quantos corações precisamos pra mostrar o grande
-
-  // gera um coração caindo
+  // cria um coração que cai até metade da tela
   function createFallHeart() {
+    // se modal aberto, não criar
+    if (document.body.classList.contains('modal-open')) return;
+
     const h = document.createElement("div");
     h.className = "heart-down";
 
-    // variação de tamanho
-    const sizeClass = Math.random();
-    if (sizeClass < 0.35) h.classList.add("small");
-    else if (sizeClass < 0.78) h.classList.add("medium");
+    // size classes
+    const r = Math.random();
+    if (r < 0.35) h.classList.add("small");
+    else if (r < 0.78) h.classList.add("medium");
     else h.classList.add("large");
 
-    // posição horizontal
-    h.style.left = (5 + Math.random() * 90) + "vw";
+    // posição horizontal (com padding lateral)
+    h.style.left = (6 + Math.random() * 88) + "vw";
 
-    // leve variação na duração e sway
+    // variação duração e sway
     const dur = (4 + Math.random() * 3).toFixed(2) + "s";
     const sway = (2 + Math.random() * 2).toFixed(2) + "s";
     h.style.setProperty('--dur', dur);
     h.style.setProperty('--sway', sway);
 
-    h.innerHTML = "💗";
-
+    h.innerText = "💗";
     heartsContainer.appendChild(h);
 
-    // quando terminar a animação 'fall', contamos
+    // quando animação 'fall' terminar (chegou em ~50vh)
     const onEnd = (ev) => {
-      // ev.animationName pode variar; garantimos que seja o fall
-      // contagem simples:
+      // contar apenas o fim do "fall"
       fallCount++;
-      // se atingir total, mostra o big-heart
-      if (fallCount >= totalFalls && !bigHeart.classList.contains("active")) {
-        // pequeno atraso pra garantir visibilidade
-        setTimeout(() => bigHeart.classList.add("active"), 200);
-      }
+      // remover evento
+      h.removeEventListener('animationend', onEnd);
 
-      // remove o elemento depois de um curto delay (deixa o big heart aparecer)
+      // deixa o elemento por um tempo curto, depois remove (visual)
       setTimeout(() => {
-        h.remove();
+        if (h.parentElement) h.remove();
       }, 900);
 
-      h.removeEventListener('animationend', onEnd);
+      // se atingiu total, criar o coração final
+      if (fallCount >= totalFalls) {
+        setTimeout(createFinalHeart, 250);
+      }
     };
 
     h.addEventListener('animationend', onEnd);
   }
 
   // cria corações caindo em intervalos
-  const fallInterval = setInterval(createFallHeart, 420);
+  const fallTimer = setInterval(createFallHeart, fallIntervalMs);
 
-  // -----------------------
-  // CORAÇÕES SUBINDO (se quiser manter o efeito que você tinha)
-  // -----------------------
-  setInterval(() => {
-    const up = document.createElement("div");
-    up.className = "heart-up";
-    up.innerHTML = "💗";
-    up.style.left = Math.random() * 100 + "vw";
-    // cores / pequenas variações via style
-    up.style.opacity = 0.95 - Math.random() * 0.25;
-    up.style.fontSize = (12 + Math.random()*16) + "px";
-    document.body.appendChild(up);
-    setTimeout(() => up.remove(), 4200);
-  }, 650);
+  // === formação do coração final (pontos usando curva paramétrica) ===
+  let finalDots = [];
+  function createFinalHeart() {
+    // evita criar duas vezes
+    if (finalDots.length) return;
 
-  // segura: quando o modal estiver aberto pausamos as animações (CSS faz a maior parte),
-  // mas também podemos forçar pausar elementos recém-criados:
-  const observer = new MutationObserver(() => {
+    const numPoints = 80; // quantos pontos compõem o coração final
+    const cx = window.innerWidth / 2;
+    const cy = window.innerHeight * 0.48; // metade da tela aproximadamente
+    const scale = Math.min(window.innerWidth, window.innerHeight) / 40; // ajusta tamanho
+
+    // usa equação clássica do heart (paramétrica)
+    // x = 16 sin^3(t)
+    // y = 13 cos(t) - 5 cos(2t) - 2 cos(3t) - cos(4t)
+    for (let i = 0; i < numPoints; i++) {
+      const t = Math.PI * 2 * (i / numPoints);
+      const xRaw = 16 * Math.pow(Math.sin(t), 3);
+      const yRaw = 13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t);
+
+      const x = cx + xRaw * scale;
+      const y = cy - yRaw * scale; // invert y
+
+      const dot = document.createElement("div");
+      dot.className = "heart-dot";
+      dot.style.left = x + "px";
+      dot.style.top = y + "px";
+      heartsContainer.appendChild(dot);
+      finalDots.push(dot);
+    }
+
+    // anima a aparição dos pontos sequencialmente (pequeno stagger)
+    finalDots.forEach((d, idx) => {
+      setTimeout(() => d.classList.add('show'), 40 + idx * 12);
+    });
+  }
+
+  // remove o coração final (usado ao fechar)
+  function removeFinalHeart() {
+    if (!finalDots.length) return;
+    finalDots.forEach((d, idx) => {
+      setTimeout(() => {
+        d.classList.remove('show');
+        setTimeout(() => { if (d.parentElement) d.remove(); }, 400);
+      }, idx * 6);
+    });
+    finalDots = [];
+  }
+
+  // Observador: pausa animações quando modal abre (garantia)
+  const obs = new MutationObserver(() => {
     const paused = document.body.classList.contains('modal-open');
-    // se necessário, pode iterar pelos corações e ajustar animationPlayState
     heartsContainer.querySelectorAll('.heart-down').forEach(el => {
       el.style.animationPlayState = paused ? 'paused' : 'running';
     });
+    finalDots.forEach(el => {
+      // deixar final dots visíveis mesmo com modal aberto? aqui respeitamos sua preferência:
+      // se modal opened, manter final visível mas com opacidade reduzida
+      if (paused) el.style.opacity = 0.35;
+      else el.style.opacity = 1;
+    });
   });
-  observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+  obs.observe(document.body, { attributes: true, attributeFilter: ['class'] });
 
-  // se usuário fechar e quiser reiniciar a cena: ao fechar já reiniciamos fallCount.
-  // (fallCount já é resetado no close())
-
-  // segurança: limpar intervalos caso a página seja descarregada
-  window.addEventListener('beforeunload', () => {
-    clearInterval(fallInterval);
-  });
+  // limpa timers se página for descarregada
+  window.addEventListener('beforeunload', () => clearInterval(fallTimer));
 });
