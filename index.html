@@ -1,34 +1,28 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Para minha Nini ❤️</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pra Nini 💗</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <audio id="music" autoplay loop>
-    <source src="nuts.mp3" type="audio/mp3">
-  </audio>
-
   <div class="overlay"></div>
 
   <div class="container">
-    <img src="foto.jpg" class="foto" alt="foto">
+    <img src="foto.jpg" class="foto">
 
-    <h1 class="title">Para você, Nini ❤️</h1>
-    <p class="txt">Você é a parte mais linda do meu mundo.</p>
+    <h1 class="title">Para Minha Princesa 💗</h1>
+    <p class="txt">Escolha uma cartinha:</p>
 
-    <!-- 3 botões empilhados -->
     <div class="buttons">
-      <button id="btn1" class="btn">Carta 1</button>
-      <button id="btn2" class="btn">Carta 2</button>
-      <button id="btn3" class="btn">Carta 3</button>
+      <button class="btn" id="btn1">Carta 1</button>
+      <button class="btn" id="btn2">Carta 2</button>
+      <button class="btn" id="btn3">Carta 3</button>
     </div>
 
-    <!-- mensagem que aparece depois (oculta por padrão) -->
-    <p id="msg" class="msg hidden">Eu te amo muito, minha princesa 💗</p>
+    <p id="msg" class="msg">Eu te amo, Nini 💖</p>
   </div>
 
   <!-- Modal das cartas -->
@@ -38,6 +32,8 @@
       <button id="closeCard" class="closeBtn">Fechar</button>
     </div>
   </div>
+
+  <audio id="music" src="nuts.mp3"></audio>
 
   <script src="script.js"></script>
 </body>
