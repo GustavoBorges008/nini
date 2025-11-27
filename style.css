@@ -161,3 +161,119 @@ body {
 .hidden {
   display: none !important;
 }
+/* Corações caindo */
+.heart {
+  position: fixed;
+  top: -20px;
+  color: #ff7fb0;
+  font-size: 20px;
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: 1; /* atrás do modal */
+  animation: fall 4s linear forwards;
+}
+
+/* Eles caem até a metade da tela */
+@keyframes fall {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  70% {
+    transform: translateY(50vh) scale(1.2);
+  }
+  100% {
+    transform: translateY(50vh) scale(1); /* para na metade */
+    opacity: 0;
+  }
+}
+
+/* Grande coração formado no final */
+.big-heart {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  font-size: 80px;
+  color: #ff2f83;
+  opacity: 0;
+  z-index: 3;
+  animation: bigHeartPop 1.6s ease forwards;
+}
+
+@keyframes bigHeartPop {
+  0% {
+    transform: translateX(-50%) scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: translateX(-50%) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+}
+/* Corações subindo */
+.heart-up {
+  position: fixed;
+  bottom: -20px;
+  color: #ff7fb0;
+  font-size: 20px;
+  opacity: 0.9;
+  pointer-events:none;
+  z-index: 1;
+  animation: rise 4s linear forwards;
+}
+
+@keyframes rise {
+  0% {
+    transform: translateY(0) scale(1);
+  }
+  70% {
+    transform: translateY(-50vh) scale(1.2);
+  }
+  100% {
+    transform: translateY(-50vh) scale(1);
+    opacity: 0;
+  }
+}
+
+/* Brilho rosa ao abrir a carta */
+.card {
+  background: #fff;
+  color: #222;
+  padding: 20px;
+  border-radius: 14px;
+  max-width:460px;
+  width:100%;
+  text-align:left;
+  box-shadow: 0 18px 60px rgba(255,0,128,0.45),
+              0 0 25px rgba(255,60,160,0.4);
+  transform: translateY(40px);
+  opacity: 0;
+  transition: all .55s ease;
+}
+
+.card.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Efeito de "arrastar para cima" */
+.card::after {
+  content: "⬆️ Arraste para cima";
+  display: block;
+  text-align: center;
+  color: #ff66b2;
+  font-size: 14px;
+  margin-top: 8px;
+  opacity: 0;
+  animation: hint 2.4s ease infinite;
+}
+
+@keyframes hint {
+  0% { opacity: 0; transform: translateY(8px); }
+  50% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(8px); }
+}
