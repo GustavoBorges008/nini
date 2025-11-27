@@ -48,3 +48,138 @@
   transform: translateY(0);
   opacity: 1;
 }
+
+/* --------------------------
+   CORAÇÕES CAINDO (NOVO)
+   -------------------------- */
+#hearts-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.heart-down {
+  position: absolute;
+  top: -10vh;
+  font-size: 22px;
+  opacity: 0.9;
+  animation: fall 5s linear forwards, sway 3s ease-in-out infinite;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-10vh) scale(1); opacity: 1; }
+  80% { transform: translateY(50vh) scale(1.2); }
+  100% { transform: translateY(50vh) scale(0.95); opacity: 0.9; }
+}
+
+@keyframes sway {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(20px); }
+  100% { transform: translateX(0); }
+}
+
+/* CORAÇÃO GRANDE */
+#big-heart {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  bottom: 10vh;
+  font-size: 130px;
+  opacity: 0;
+  transition: all .6s ease;
+  z-index: 2;
+}
+
+#big-heart.active {
+  transform: translateX(-50%) scale(1);
+  opacity: 1;
+}
+
+/* quando carta aberta → enfraquece corações */
+body.modal-open #hearts-container {
+  opacity: 0.2;
+  filter: blur(2px);
+}
+
+/* ------- Estilos básicos (opcional) ------- */
+body {
+  background: #ffe1f0;
+  font-family: Arial;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.container {
+  margin-top: 40px;
+  z-index: 3;
+  position: relative;
+}
+
+.foto {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 20px rgba(255, 0, 140, 0.4);
+}
+
+.title {
+  font-size: 28px;
+  margin-top: 12px;
+  color: #d60080;
+}
+
+.txt {
+  font-size: 18px;
+  color: #333;
+}
+
+.buttons {
+  margin: 20px auto;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.btn {
+  background: #ff7fb0;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #ff4f98;
+}
+
+.msg {
+  margin-top: 15px;
+  font-size: 20px;
+  color: #d60080;
+}
+
+/* Modal fundo */
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9;
+}
+
+.closeBtn {
+  margin-top: 20px;
+  background: #ff7fb0;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
