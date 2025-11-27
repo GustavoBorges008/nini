@@ -8,20 +8,24 @@
 </head>
 <body>
 
-    <audio id="music" autoplay loop>
-        <source src="nuts.mp3" type="audio/mp3">
-    </audio>
+    <div class="hearts-container"></div>
 
     <div class="overlay"></div>
 
     <div class="container">
         <img src="foto.jpg" class="foto" alt="foto">
-        <h1>Para você, Nini ❤️</h1>
+        <h1 class="glow">Para você, Nini ❤️</h1>
         <p class="txt">Você é a parte mais linda do meu mundo.</p>
 
         <button id="btn" class="btn">Clique aqui</button>
 
-        <p id="msg" class="msg">Eu amo muito você, minha princesa 💗</p>
+        <p id="msg" class="hidden msg">Eu te amo muito, minha princesa 💗</p>
+
+        <div id="cartas" class="hidden cartas">
+            <p>💌 <b>Carta 1:</b> Eu amo muito você. Me desculpe por, às vezes, não ser alguém ideal para ti.</p>
+            <p>💌 <b>Carta 2:</b> Eu quero passar meus dias ao seu lado, até o último dia da minha vida.</p>
+            <p>💌 <b>Carta 3:</b> Eu quero que nosso futuro seja próspero e cheio de amor.</p>
+        </div>
     </div>
 
     <script src="script.js"></script>
