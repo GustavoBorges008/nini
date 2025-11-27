@@ -8,35 +8,53 @@
 </head>
 <body>
 
+  <!-- Música -->
   <audio id="music" src="nuts.mp3" preload="auto" loop></audio>
 
   <div class="overlay"></div>
 
   <div class="container">
+
+    <!-- Foto -->
     <img src="foto.jpg" class="foto" alt="foto">
 
     <h1 class="title">Para você, Nini ❤️</h1>
     <p class="txt">Você é a parte mais linda do meu mundo.</p>
 
-    <!-- 3 botões empilhados (agora com data-text contendo as mensagens diretamente no HTML) -->
+    <!-- Botões empilhados -->
     <div class="buttons">
-      <button id="btn1" class="btn" data-text="Eu amo muito você. Me desculpe por, às vezes, não ser alguém ideal para ti.">Carta 1</button>
 
-      <button id="btn2" class="btn" data-text="Eu quero passar os meus dias ao seu lado, todos os dias, até o último dia da minha vida.">Carta 2</button>
+      <button id="btn1" class="btn"
+        data-text="Eu amo muito você. Me desculpe por, às vezes, não ser alguém ideal para ti.">
+        Carta 1
+      </button>
 
-      <button id="btn3" class="btn" data-text="Eu quero que nosso futuro seja próspero e cheio de amor.">Carta 3</button>
+      <button id="btn2" class="btn"
+        data-text="Eu quero passar os meus dias ao seu lado, todos os dias, até o último dia da minha vida.">
+        Carta 2
+      </button>
+
+      <button id="btn3" class="btn"
+        data-text="Eu quero que nosso futuro seja próspero e cheio de amor.">
+        Carta 3
+      </button>
+
     </div>
 
-    <!-- mensagem que aparece depois (oculta por padrão) -->
+    <!-- Mensagem final (começa oculta) -->
     <p id="msg" class="msg hidden">Eu te amo muito, minha princesa 💗</p>
+
   </div>
 
-  <!-- Modal das cartas -->
+  <!-- Modal (carta aberta) -->
   <div id="modal" class="modal hidden" aria-hidden="true">
+
     <div class="card" role="dialog" aria-modal="true">
       <p id="cardText"></p>
+
       <button id="closeCard" class="closeBtn">Fechar</button>
     </div>
+
   </div>
 
   <script src="script.js"></script>
