@@ -1,41 +1,44 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para minha Nini ❤️</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Para minha Nini ❤️</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <audio id="music" autoplay loop>
-        <source src="nuts.mp3" type="audio/mp3">
-    </audio>
+  <audio id="music" autoplay loop>
+    <source src="nuts.mp3" type="audio/mp3">
+  </audio>
 
-    <div class="overlay"></div>
+  <div class="overlay"></div>
 
-    <div class="container">
-        <img src="foto.jpg" class="foto" alt="foto">
+  <div class="container">
+    <img src="foto.jpg" class="foto" alt="foto">
 
-        <h1>Para você, Nini ❤️</h1>
-        <p class="txt">Você é a parte mais linda do meu mundo.</p>
+    <h1 class="title">Para você, Nini ❤️</h1>
+    <p class="txt">Você é a parte mais linda do meu mundo.</p>
 
-        <!-- 3 botões empilhados -->
-        <div class="buttons">
-            <button id="btn1" class="btn">Carta 1</button>
-            <button id="btn2" class="btn">Carta 2</button>
-            <button id="btn3" class="btn">Carta 3</button>
-        </div>
+    <!-- 3 botões empilhados -->
+    <div class="buttons">
+      <button id="btn1" class="btn">Carta 1</button>
+      <button id="btn2" class="btn">Carta 2</button>
+      <button id="btn3" class="btn">Carta 3</button>
     </div>
 
-    <!-- Modal das cartas -->
-    <div id="modal" class="modal hidden">
-        <div class="card">
-            <p id="cardText"></p>
-            <button id="closeCard" class="closeBtn">Fechar</button>
-        </div>
-    </div>
+    <!-- mensagem que aparece depois (oculta por padrão) -->
+    <p id="msg" class="msg hidden">Eu te amo muito, minha princesa 💗</p>
+  </div>
 
-    <script src="script.js"></script>
+  <!-- Modal das cartas -->
+  <div id="modal" class="modal hidden">
+    <div class="card">
+      <p id="cardText"></p>
+      <button id="closeCard" class="closeBtn">Fechar</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
