@@ -6,9 +6,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const msg = document.getElementById("msg");
   const closeCard = document.getElementById("closeCard");
 
-  // esconde no início
+  const heartsContainer = document.getElementById("hearts-container");
+  const bigHeart = document.getElementById("big-heart");
+
+  // esconder no início
   modal.classList.add("hidden");
-  msg.classList.remove("show");
 
   // evitar música tocar várias vezes
   let started = false;
@@ -23,9 +25,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const text = btn.getAttribute("data-text");
     cardText.innerText = text;
 
+    document.body.classList.add("modal-open");
     modal.classList.remove("hidden");
 
-    // animação suave
     setTimeout(() => {
       cardBox.classList.add("show");
     }, 30);
@@ -37,19 +39,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   closeCard.onclick = () => {
     cardBox.classList.remove("show");
+
+    document.body.classList.remove("modal-open");
+
     setTimeout(() => {
       modal.classList.add("hidden");
     }, 300);
   };
 
-  // fechar clicando fora
   modal.addEventListener("click", e => {
-    if (e.target === modal) {
-      closeCard.click();
-    }
+    if (e.target === modal) closeCard.click();
   });
 
-  // Corações subindo
+  // ----- CORAÇÕES SUBINDO -----
   setInterval(() => {
     const h = document.createElement("div");
     h.className = "heart-up";
@@ -58,4 +60,29 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.appendChild(h);
     setTimeout(() => h.remove(), 4000);
   }, 350);
+
+  // ----- CORAÇÕES CAINDO -----
+  let fallCount = 0;
+  const totalFalls = 25;
+
+  const createFallHeart = () => {
+    const h = document.createElement("div");
+    h.className = "heart-down";
+    h.innerHTML = "💗";
+    h.style.left = Math.random() * 100 + "vw";
+
+    heartsContainer.appendChild(h);
+
+    h.addEventListener("animationend", () => {
+      fallCount++;
+
+      if (fallCount >= totalFalls) {
+        bigHeart.classList.add("active");
+      }
+
+      setTimeout(() => h.remove(), 2000);
+    });
+  };
+
+  setInterval(createFallHeart, 500);
 });
