@@ -157,3 +157,7 @@ body {
   .btn { font-size:15px; padding:12px }
   .card { padding:16px }
 }
+/* força qualquer coisa com hidden a sumir */
+.hidden {
+  display: none !important;
+}
