@@ -8,23 +8,31 @@
 </head>
 <body>
 
-    <div class="hearts-container"></div>
+    <audio id="music" autoplay loop>
+        <source src="nuts.mp3" type="audio/mp3">
+    </audio>
 
     <div class="overlay"></div>
 
     <div class="container">
         <img src="foto.jpg" class="foto" alt="foto">
-        <h1 class="glow">Para você, Nini ❤️</h1>
+
+        <h1>Para você, Nini ❤️</h1>
         <p class="txt">Você é a parte mais linda do meu mundo.</p>
 
-        <button id="btn" class="btn">Clique aqui</button>
+        <!-- 3 botões empilhados -->
+        <div class="buttons">
+            <button id="btn1" class="btn">Carta 1</button>
+            <button id="btn2" class="btn">Carta 2</button>
+            <button id="btn3" class="btn">Carta 3</button>
+        </div>
+    </div>
 
-        <p id="msg" class="hidden msg">Eu te amo muito, minha princesa 💗</p>
-
-        <div id="cartas" class="hidden cartas">
-            <p>💌 <b>Carta 1:</b> Eu amo muito você. Me desculpe por, às vezes, não ser alguém ideal para ti.</p>
-            <p>💌 <b>Carta 2:</b> Eu quero passar meus dias ao seu lado, até o último dia da minha vida.</p>
-            <p>💌 <b>Carta 3:</b> Eu quero que nosso futuro seja próspero e cheio de amor.</p>
+    <!-- Modal das cartas -->
+    <div id="modal" class="modal hidden">
+        <div class="card">
+            <p id="cardText"></p>
+            <button id="closeCard" class="closeBtn">Fechar</button>
         </div>
     </div>
 
