@@ -7,33 +7,45 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
+  <!-- música -->
   <audio id="music" src="nuts.mp3" preload="auto" loop></audio>
 
-  <!-- Corações caindo -->
-  <div id="hearts-container"></div>
-  <div id="big-heart">💗</div>
+  <!-- Fundo/efeitos -->
+  <div class="bg"></div>
 
-  <div class="container">
-    <img src="foto.jpg" class="foto" alt="foto">
+  <!-- Corações caindo (container global, atrás do modal) -->
+  <div id="hearts-container" aria-hidden="true"></div>
 
-    <h1 class="title">Para você, Nini ❤️</h1>
-    <p class="txt">Você é a parte mais linda do meu mundo.</p>
+  <!-- Coração grande final -->
+  <div id="big-heart" aria-hidden="true">💗</div>
 
-    <div class="buttons">
+  <!-- Conteúdo principal -->
+  <main class="wrap">
+    <header class="hero">
+      <img src="foto.jpg" alt="Nini" class="foto">
+      <div class="hero-text">
+        <h1 class="title">Para você, Nini ❤️</h1>
+        <p class="subtitle">Você é a parte mais linda do meu mundo.</p>
+      </div>
+    </header>
+
+    <section class="cards">
       <button id="btn1" class="btn" data-text="Eu amo muito você. Me desculpe por, às vezes, não ser alguém ideal para ti.">Carta 1</button>
       <button id="btn2" class="btn" data-text="Eu quero passar os meus dias ao seu lado, todos os dias, até o último dia da minha vida.">Carta 2</button>
       <button id="btn3" class="btn" data-text="Eu quero que nosso futuro seja próspero e cheio de amor.">Carta 3</button>
-    </div>
+    </section>
 
     <p id="msg" class="msg">Eu te amo muito, minha princesa 💗</p>
-  </div>
+  </main>
 
   <!-- Modal da carta -->
-  <div id="modal" class="modal hidden">
-    <div class="card" id="cardBox">
-      <p id="cardText"></p>
-      <button id="closeCard" class="closeBtn">Fechar</button>
+  <div id="modal" class="modal hidden" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="card" id="cardBox" role="document">
+      <h2 class="card-title">Minha Nini</h2>
+      <p id="cardText" class="card-text"></p>
+      <div class="card-actions">
+        <button id="closeCard" class="closeBtn">Fechar</button>
+      </div>
     </div>
   </div>
 
