@@ -1,29 +1,29 @@
-const btn = document.getElementById("btn");
-const msg = document.getElementById("msg");
-const cartas = document.getElementById("cartas");
-const heartsContainer = document.querySelector(".hearts-container");
+const music = document.getElementById("music");
+const modal = document.getElementById("modal");
+const cardText = document.getElementById("cardText");
+const closeCard = document.getElementById("closeCard");
 
-/* Botão clicado */
-btn.addEventListener("click", () => {
-    msg.classList.add("show");
-    cartas.classList.remove("hidden");
+// Botões das cartas
+const btn1 = document.getElementById("btn1");
+const btn2 = document.getElementById("btn2");
+const btn3 = document.getElementById("btn3");
 
-    btn.style.display = "none";
+// Evita música reiniciar
+document.addEventListener("click", () => {
+    if (!music.playedOnce) {
+        music.play().catch(() => {});
+        music.playedOnce = true;
+    }
+}, { once: true });
 
-    criarCoracoes();
-});
+// Textos das cartas
+btn1.onclick = () => openCard("Eu amo muito você. Me desculpe por não ser alguém ideal para ti.");
+btn2.onclick = () => openCard("Eu quero passar os meus dias ao seu lado, todos os dias, até o dia da minha morte.");
+btn3.onclick = () => openCard("Eu quero que nosso futuro seja próspero.");
 
-/* Corações infinitos */
-function criarCoracoes() {
-    setInterval(() => {
-        const heart = document.createElement("span");
-        heart.innerHTML = "❤";
-        heart.style.left = Math.random() * 90 + "%";
-        heart.style.fontSize = Math.random() * 20 + 20 + "px";
-        heartsContainer.appendChild(heart);
-
-        setTimeout(() => {
-            heart.remove();
-        }, 4000);
-    }, 300);
+function openCard(text) {
+    cardText.innerText = text;
+    modal.classList.add("show");
 }
+
+closeCard.onclick = () => modal.classList.remove("show");
