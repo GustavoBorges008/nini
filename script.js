@@ -58,3 +58,59 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 });
+// Criar corações caindo continuamente
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.classList.add("heart");
+  heart.innerHTML = "💗";
+
+  // posição aleatória horizontal
+  heart.style.left = Math.random() * 100 + "vw";
+
+  document.body.appendChild(heart);
+
+  // remover depois de cair
+  setTimeout(() => {
+    heart.remove();
+  }, 4000);
+}, 350);
+
+// Criar coração grande ao fundo (1 vez a cada 5 segundos)
+setInterval(() => {
+  const big = document.createElement("div");
+  big.classList.add("big-heart");
+  big.innerHTML = "❤️";
+
+  document.body.appendChild(big);
+
+  // remover depois da animação
+  setTimeout(() => big.remove(), 2000);
+}, 5000);
+// Corações subindo continuamente
+setInterval(() => {
+  const heart = document.createElement("div");
+  heart.classList.add("heart-up");
+  heart.innerHTML = "💗";
+  heart.style.left = Math.random() * 100 + "vw";
+  document.body.appendChild(heart);
+  setTimeout(() => heart.remove(), 4000);
+}, 350);
+
+// Quando abrir a carta → animação suave + brilho
+function showCardAnimation() {
+  const card = document.querySelector(".card");
+  if (card) card.classList.add("show");
+}
+
+// Mostrar carta = já existe no seu script, só adicionar:
+document.addEventListener("click", (e) => {
+  if (e.target.classList.contains("btn")) {
+    setTimeout(showCardAnimation, 50);
+  }
+});
+
+// Remover animação ao fechar
+document.getElementById("closeCard").addEventListener("click", () => {
+  const card = document.querySelector(".card");
+  if (card) card.classList.remove("show");
+});
